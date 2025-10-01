@@ -1,0 +1,31 @@
+import java.util.*;
+
+class Solution {
+    public int countCompleteSubarrays(int[] nums) {
+        int n = nums.length;
+
+        // Step 1: Find total distinct elements
+        HashSet<Integer> unique = new HashSet<>();
+        for (int num : nums) unique.add(num);
+        int m = unique.size();
+
+        // Step 2: Sliding window
+        Map<Integer, Integer> freq = new HashMap<>();
+        int left = 0, count = 0, distinct = 0;
+
+        for (int right = 0; right < n; right++) {
+            // expand window
+            freq.put(nums[right], freq.getOrDefault(nums[right], 0) + 1);
+            if (freq.get(nums[right]) == 1) distinct++;
+
+            // shrink window until valid
+            while (distinct == m) {
+                count += (n - right); // all subarrays starting at left are valid
+                freq.put(nums[left], freq.get(nums[left]) - 1);
+                if (freq.get(nums[left]) == 0) distinct--;
+                left++;
+            }
+        }
+        return count;
+    }
+}
