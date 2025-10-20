@@ -1,0 +1,24 @@
+// User function Template for Java
+
+class Complete {
+
+    // Function for finding maximum and value pair
+    public static int[] Smallestonleft(int arr[], int n) {
+        // Complete the function
+         List<Integer> result = new ArrayList<>();
+        TreeSet<Integer> set = new TreeSet<>();
+
+        for (int i = 0; i < n; i++) {
+            Integer smaller = set.lower(arr[i]); // greatest smaller element
+            if (smaller == null) result.add(-1);
+            else result.add(smaller);
+            set.add(arr[i]);
+        }
+
+        int brr[] = new int[result.size()];
+        for(int i=0; i<arr.length; i++){
+            brr[i] = result.get(i);
+        }
+        return brr;
+    }
+}
